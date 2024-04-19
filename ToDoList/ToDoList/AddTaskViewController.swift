@@ -44,6 +44,8 @@ class AddTaskViewController: UIViewController {
     // MARK: - Methods
     
     private func setupLayout() {
+        view.backgroundColor = .systemBackground
+        
         title = "Добавить задачу"
         
         view.addSubview(submitButton)
@@ -63,7 +65,7 @@ class AddTaskViewController: UIViewController {
         let text = textField.text ?? "nil"
         
         self.delegate?.createTask(text: text)
-        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true)
     }
     
 }

@@ -20,7 +20,7 @@ struct DataToDo {
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    // MARK: - Data initial
+    // MARK: Data initial
     var dataArr: [DataToDo] = []
     
     
@@ -38,7 +38,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: - methods
     private func createTable() {
-        let tableView = UITableView(frame: view.bounds)
+        tableView = UITableView(frame: view.bounds)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
         tableView.dataSource = self
         tableView.delegate = self
@@ -47,16 +47,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     private func setupLayout() {
-        view.backgroundColor = .white
         
-        title = "ToDo-Lite"
+        title = "ToDoList"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTask))
     
         createTable()
     }
     
     
-    // MARK: - Table methods
+    // MARK: Table methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataArr.count
@@ -68,10 +67,19 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let presentTaskViewController = PresentTaskViewController()
+        let selectedTask = dataArr[indexPath.row]
+        presentTaskViewController.taskText = selectedTask.title
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        navigationController?.pushViewController(presentTaskViewController, animated: true)
+    }
+    
     @objc func addTask() {
         let addTaskViewController = AddTaskViewController()
         addTaskViewController.delegate = self
-        navigationController?.pushViewController(addTaskViewController, animated: true)
+        self.present(addTaskViewController, animated: true)
     }
 
 
@@ -83,7 +91,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 extension MainViewController: AddTaskViewControllerDelegate {
     func createTask(text: String) {
         dataArr.append(DataToDo(title: text))
-        createTable()
+        tableView.reloadData()
     }
     
 }

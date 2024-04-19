@@ -80,7 +80,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
 // MARK: - Extentions
 
-extension ViewController: AddTaskViewControllerDelegate {
+extension MainViewController: AddTaskViewControllerDelegate {
     func createTask(text: String) {
         dataArr.append(DataToDo(title: text))
         createTable()

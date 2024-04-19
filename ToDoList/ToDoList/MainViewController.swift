@@ -69,13 +69,23 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @objc func addTask() {
-        
+        let addTaskViewController = AddTaskViewController()
+        addTaskViewController.delegate = self
+        navigationController?.pushViewController(addTaskViewController, animated: true)
     }
 
 
 }
 
 
+// MARK: - Extentions
 
+extension ViewController: AddTaskViewControllerDelegate {
+    func createTask(text: String) {
+        dataArr.append(DataToDo(title: text))
+        createTable()
+    }
+    
+}
 
 

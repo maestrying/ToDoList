@@ -70,8 +70,11 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let presentTaskViewController = PresentTaskViewController()
         let selectedTask = dataArr[indexPath.row]
-        presentTaskViewController.taskText = selectedTask.title
+        presentTaskViewController.dataToDo = selectedTask
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        presentTaskViewController.delegate = self
+        presentTaskViewController.taskIndex = indexPath
         
         navigationController?.pushViewController(presentTaskViewController, animated: true)
     }
@@ -105,6 +108,14 @@ extension MainViewController: AddTaskViewControllerDelegate {
         tableView.reloadData()
     }
     
+}
+
+extension MainViewController: PresentTaskViewControllerDelegate {
+    func deleteTask(at index: IndexPath) {
+        dataArr.remove(at: index.row)
+        tableView.deleteRows(at: [index], with: .automatic)
+    }
+
 }
 
 

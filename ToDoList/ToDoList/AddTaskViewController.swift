@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddTaskViewController: UIViewController {
+class AddTaskViewController: UIViewController, UITextFieldDelegate {
     
     
     // MARK: - Properties
@@ -36,6 +36,7 @@ class AddTaskViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        textField.delegate = self
 
         setupLayout()
     }
@@ -44,6 +45,13 @@ class AddTaskViewController: UIViewController {
     // MARK: - Methods
     
     private func setupLayout() {
+        
+        // MARK: Hide keyboard
+        let keyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        keyboardGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(keyboardGesture)
+        
+        // MARK: UI
         view.backgroundColor = .systemBackground
         
         title = "Добавить задачу"
@@ -51,6 +59,7 @@ class AddTaskViewController: UIViewController {
         view.addSubview(submitButton)
         view.addSubview(textField)
         
+        // MARK: Constraints
         NSLayoutConstraint.activate([
             textField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
@@ -61,11 +70,20 @@ class AddTaskViewController: UIViewController {
         
     }
     
+    @objc func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
     @objc func sendDataFromTextField() {
         let text = textField.text ?? "nil"
         
         self.delegate?.createTask(text: text)
         self.dismiss(animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
 }

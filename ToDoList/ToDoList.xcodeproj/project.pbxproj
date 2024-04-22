@@ -15,6 +15,9 @@
 		8510A4382BD1F75D000DF481 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8510A4362BD1F75D000DF481 /* LaunchScreen.storyboard */; };
 		85AF00FB2BD209B7007CE783 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AF00FA2BD209B7007CE783 /* AddTaskViewController.swift */; };
 		85AF00FD2BD20DC1007CE783 /* PresentTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AF00FC2BD20DC1007CE783 /* PresentTaskViewController.swift */; };
+		85AF00FF2BD34D7F007CE783 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AF00FE2BD34D7F007CE783 /* SettingsViewController.swift */; };
+		85AF01012BD34DFB007CE783 /* FavoriteTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AF01002BD34DFB007CE783 /* FavoriteTasksViewController.swift */; };
+		85AF01032BD5F0AF007CE783 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AF01022BD5F0AF007CE783 /* TabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		8510A4392BD1F75D000DF481 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85AF00FA2BD209B7007CE783 /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 		85AF00FC2BD20DC1007CE783 /* PresentTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentTaskViewController.swift; sourceTree = "<group>"; };
+		85AF00FE2BD34D7F007CE783 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		85AF01002BD34DFB007CE783 /* FavoriteTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTasksViewController.swift; sourceTree = "<group>"; };
+		85AF01022BD5F0AF007CE783 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +66,9 @@
 		8510A4272BD1F75B000DF481 /* ToDoList */ = {
 			isa = PBXGroup;
 			children = (
+				85AF01042BD5F318007CE783 /* TabBar */,
 				8510A4282BD1F75B000DF481 /* AppDelegate.swift */,
 				8510A42A2BD1F75B000DF481 /* SceneDelegate.swift */,
-				8510A42C2BD1F75B000DF481 /* MainViewController.swift */,
 				85AF00FA2BD209B7007CE783 /* AddTaskViewController.swift */,
 				85AF00FC2BD20DC1007CE783 /* PresentTaskViewController.swift */,
 				8510A4342BD1F75D000DF481 /* Assets.xcassets */,
@@ -71,6 +77,17 @@
 				8510A4312BD1F75B000DF481 /* ToDoList.xcdatamodeld */,
 			);
 			path = ToDoList;
+			sourceTree = "<group>";
+		};
+		85AF01042BD5F318007CE783 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				85AF01022BD5F0AF007CE783 /* TabBarController.swift */,
+				85AF01002BD34DFB007CE783 /* FavoriteTasksViewController.swift */,
+				8510A42C2BD1F75B000DF481 /* MainViewController.swift */,
+				85AF00FE2BD34D7F007CE783 /* SettingsViewController.swift */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,7 +163,10 @@
 				8510A42D2BD1F75B000DF481 /* MainViewController.swift in Sources */,
 				85AF00FD2BD20DC1007CE783 /* PresentTaskViewController.swift in Sources */,
 				8510A4292BD1F75B000DF481 /* AppDelegate.swift in Sources */,
+				85AF01032BD5F0AF007CE783 /* TabBarController.swift in Sources */,
+				85AF01012BD34DFB007CE783 /* FavoriteTasksViewController.swift in Sources */,
 				8510A42B2BD1F75B000DF481 /* SceneDelegate.swift in Sources */,
+				85AF00FF2BD34D7F007CE783 /* SettingsViewController.swift in Sources */,
 				8510A4332BD1F75B000DF481 /* ToDoList.xcdatamodeld in Sources */,
 				85AF00FB2BD209B7007CE783 /* AddTaskViewController.swift in Sources */,
 			);

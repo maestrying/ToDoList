@@ -37,6 +37,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     // MARK: - methods
+    
+    private func setupLayout() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTask))
+    
+        createTable()
+    }
+    
     private func createTable() {
         tableView = UITableView(frame: view.bounds)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
@@ -44,14 +51,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.delegate = self
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(tableView)
-    }
-    
-    private func setupLayout() {
-        
-        title = "ToDoList"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTask))
-    
-        createTable()
     }
     
     
@@ -76,6 +75,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         presentTaskViewController.delegate = self
         presentTaskViewController.taskIndex = indexPath
         
+        presentTaskViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(presentTaskViewController, animated: true)
     }
     

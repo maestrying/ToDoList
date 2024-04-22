@@ -25,7 +25,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     // MARK: - Properties
-    var tableView: UITableView!
+    var tasksTableView: UITableView!
     let identifier = "MyTable"
     
     
@@ -45,12 +45,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     private func createTable() {
-        tableView = UITableView(frame: view.bounds)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(tableView)
+        tasksTableView = UITableView(frame: view.bounds)
+        tasksTableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
+        tasksTableView.dataSource = self
+        tasksTableView.delegate = self
+        tasksTableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(tasksTableView)
     }
     
     
@@ -66,6 +66,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
     }
     
+    // MARK: When touch cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let presentTaskViewController = PresentTaskViewController()
         let selectedTask = dataArr[indexPath.row]
@@ -79,6 +80,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         navigationController?.pushViewController(presentTaskViewController, animated: true)
     }
     
+    // MARK: Gesture for delete task
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { action, view, completionHandler in
             self.dataArr.remove(at: indexPath.row)
@@ -105,7 +107,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 extension MainViewController: AddTaskViewControllerDelegate {
     func createTask(text: String) {
         dataArr.append(DataToDo(title: text))
-        tableView.reloadData()
+        tasksTableView.reloadData()
     }
     
 }
@@ -113,7 +115,7 @@ extension MainViewController: AddTaskViewControllerDelegate {
 extension MainViewController: PresentTaskViewControllerDelegate {
     func deleteTask(at index: IndexPath) {
         dataArr.remove(at: index.row)
-        tableView.deleteRows(at: [index], with: .automatic)
+        tasksTableView.deleteRows(at: [index], with: .automatic)
     }
 
 }

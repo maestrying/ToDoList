@@ -7,8 +7,12 @@
 
 import UIKit
 
+// MARK: - Protocols
+protocol AddTaskViewControllerDelegate: AnyObject {
+    func createTask(text: String)
+}
+
 class AddTaskViewController: UIViewController, UITextFieldDelegate {
-    
     
     // MARK: - Properties
     

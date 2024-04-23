@@ -7,11 +7,6 @@
 
 import UIKit
 
-// MARK: - Protocold
-protocol AddTaskViewControllerDelegate: AnyObject {
-    func createTask(text: String)
-}
-
 
 // MARK: - Data
 struct DataToDo {

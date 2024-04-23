@@ -14,6 +14,7 @@ class TabBarController: UITabBarController {
         
         setupTabs()
         selectedIndex = 1
+        tabBar.backgroundColor = .gray.withAlphaComponent(0.2)
     }
     
     // MARK: - Tab setup
@@ -23,7 +24,6 @@ class TabBarController: UITabBarController {
         let settings = createNav(title: "Настройки", image: UIImage(systemName: "gearshape.fill"), viewController: SettingsViewController())
         
         setViewControllers([favorites, main, settings], animated: true)
-        
         
     }
     

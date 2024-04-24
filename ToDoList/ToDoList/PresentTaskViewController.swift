@@ -18,7 +18,7 @@ class PresentTaskViewController: UIViewController {
     
     // MARK: - Properties
     weak var delegate: PresentTaskViewControllerDelegate?
-    var dataToDo: DataToDo?
+    var dataToDo: TaskEntity?
     var taskIndex: IndexPath?
     
     private lazy var label: UILabel = {

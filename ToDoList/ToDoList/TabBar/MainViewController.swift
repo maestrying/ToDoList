@@ -7,16 +7,11 @@
 
 import UIKit
 
-
-// MARK: - Data
-struct DataToDo {
-    var title: String
-}
-
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     // MARK: Data initial
-    var dataArr: [DataToDo] = []
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private var models = [TaskEntity]()
     
     
     // MARK: - Properties
@@ -27,6 +22,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getAllItems()
         setupLayout()
     }
     
@@ -52,19 +48,19 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: Table methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataArr.count
+        return models.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-        cell.textLabel?.text = dataArr[indexPath.row].title
+        cell.textLabel?.text = models[indexPath.row].title
         return cell
     }
     
     // MARK: When touch cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let presentTaskViewController = PresentTaskViewController()
-        let selectedTask = dataArr[indexPath.row]
+        let selectedTask = models[indexPath.row]
         presentTaskViewController.dataToDo = selectedTask
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -78,7 +74,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: Gesture for delete task
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { action, view, completionHandler in
-            self.dataArr.remove(at: indexPath.row)
+            let selectedTask = self.models[indexPath.row]
+            self.deleteItem(item: selectedTask)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
         }
@@ -92,6 +89,59 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         addTaskViewController.delegate = self
         self.present(addTaskViewController, animated: true)
     }
+    
+
+    // MARK: - CRUD
+    
+    func getAllItems() {
+        do {
+            models = try context.fetch(TaskEntity.fetchRequest())
+            
+            DispatchQueue.main.async {
+                self.tasksTableView.reloadData()
+            }
+        }
+        catch {
+            // Error
+        }
+    }
+    
+    func createItem(title: String) {
+        let newItem = TaskEntity(context: context)
+        newItem.title = title
+        
+        do {
+            try context.save()
+            getAllItems()
+        }
+        catch {
+            
+        }
+    }
+    
+    func deleteItem(item: TaskEntity) {
+        context.delete(item)
+        
+        do {
+            try context.save()
+            getAllItems()
+        }
+        catch {
+            
+        }
+    }
+    
+    func updateItem(item: TaskEntity, newTitle: String) {
+        item.title = newTitle
+        
+        do {
+            try context.save()
+            getAllItems()
+        }
+        catch {
+            
+        }
+    }
 
 
 }
@@ -101,15 +151,14 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
 extension MainViewController: AddTaskViewControllerDelegate {
     func createTask(text: String) {
-        dataArr.append(DataToDo(title: text))
-        tasksTableView.reloadData()
+        createItem(title: text)
     }
     
 }
 
 extension MainViewController: PresentTaskViewControllerDelegate {
     func deleteTask(at index: IndexPath) {
-        dataArr.remove(at: index.row)
+        deleteItem(item: models[index.row])
         tasksTableView.deleteRows(at: [index], with: .automatic)
     }
 

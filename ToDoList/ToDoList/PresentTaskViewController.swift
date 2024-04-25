@@ -23,7 +23,10 @@ class PresentTaskViewController: UIViewController {
     
     private lazy var textField: UITextField = {
         var textField = UITextField()
-        textField.text = "123"
+        textField.font = UIFont.systemFont(ofSize: 20)
+        if let text = dataToDo?.title {
+            textField.text = dataToDo?.title
+        }
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField

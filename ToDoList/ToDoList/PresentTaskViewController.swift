@@ -32,6 +32,22 @@ class PresentTaskViewController: UIViewController {
         return textField
     }()
     
+    private lazy var descrTask: UITextView = {
+        var textView = UITextView()
+        textView.textColor = .white
+        if let text = dataToDo?.descr {
+            textView.text = dataToDo?.descr
+        }
+        textView.backgroundColor = .darkGray.withAlphaComponent(0.3)
+        textView.layer.cornerRadius = 4
+        textView.font = UIFont.systemFont(ofSize: 14)
+        textView.isEditable = true
+        textView.isScrollEnabled = true
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+    
     
     // MARK: - Lifecycle
 
@@ -50,6 +66,7 @@ class PresentTaskViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteAction))
         
         view.addSubview(textField)
+        view.addSubview(descrTask)
         
         
         // MARK: Constraints
@@ -58,6 +75,11 @@ class PresentTaskViewController: UIViewController {
             textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            
+            descrTask.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            descrTask.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            descrTask.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 40),
+            descrTask.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
     

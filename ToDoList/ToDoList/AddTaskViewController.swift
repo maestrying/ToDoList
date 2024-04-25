@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - Protocols
 protocol AddTaskViewControllerDelegate: AnyObject {
-    func createTask(text: String)
+    func createTask(text: String, descr: String)
 }
 
 class AddTaskViewController: UIViewController, UITextFieldDelegate {
@@ -40,6 +40,19 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate {
         return submitButton
     }()
     
+    private lazy var descrTask: UITextView = {
+        var textView = UITextView()
+        textView.textColor = .white
+        textView.font = UIFont.systemFont(ofSize: 14)
+        textView.backgroundColor = .black
+        textView.layer.cornerRadius = 4
+        textView.isEditable = true
+        textView.isScrollEnabled = true
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+    
 
     // MARK: - LifeCycle
     
@@ -67,6 +80,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate {
         
         view.addSubview(submitButton)
         view.addSubview(textField)
+        view.addSubview(descrTask)
         
         // MARK: Constraints
         NSLayoutConstraint.activate([
@@ -79,6 +93,11 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate {
             submitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
             submitButton.widthAnchor.constraint(equalToConstant: 300),
             submitButton.heightAnchor.constraint(equalToConstant: 60),
+            
+            descrTask.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            descrTask.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            descrTask.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 40),
+            descrTask.heightAnchor.constraint(equalToConstant: 200),
 
         ])
         
@@ -90,8 +109,9 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate {
     
     @objc func sendDataFromTextField() {
         let text = textField.text ?? "nil"
+        let descr = descrTask.text ?? "nil"
         
-        self.delegate?.createTask(text: text)
+        self.delegate?.createTask(text: text, descr: descr)
         self.dismiss(animated: true)
     }
     

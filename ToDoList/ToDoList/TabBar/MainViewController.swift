@@ -106,9 +106,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func createItem(title: String) {
+    func createItem(title: String, descr: String) {
         let newItem = TaskEntity(context: context)
         newItem.title = title
+        newItem.descr = descr
         
         do {
             try context.save()
@@ -131,8 +132,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func updateItem(item: TaskEntity, newTitle: String) {
+    func updateItem(item: TaskEntity, newTitle: String, newDescr: String) {
         item.title = newTitle
+        item.descr = newDescr
         
         do {
             try context.save()
@@ -150,8 +152,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 // MARK: - Extentions
 
 extension MainViewController: AddTaskViewControllerDelegate {
-    func createTask(text: String) {
-        createItem(title: text)
+    func createTask(text: String, descr: String) {
+        createItem(title: text, descr: descr)
     }
     
 }

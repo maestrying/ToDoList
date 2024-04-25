@@ -21,6 +21,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate {
     private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Введите что хотите сделать"
+        textField.borderStyle = .roundedRect
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -29,7 +30,11 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate {
     private lazy var submitButton: UIButton = {
         let submitButton = UIButton(type: .system)
         submitButton.setTitle("Сохранить", for: .normal)
+        submitButton.setTitleColor(.white, for: .normal)
+        submitButton.layer.cornerRadius = 10.0
+        submitButton.titleLabel?.adjustsFontSizeToFitWidth = true
         submitButton.addTarget(self, action: #selector(sendDataFromTextField), for: .touchUpInside)
+        submitButton.backgroundColor = .systemBlue
         
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         return submitButton
@@ -65,11 +70,16 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate {
         
         // MARK: Constraints
         NSLayoutConstraint.activate([
-            textField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-            
+            textField.heightAnchor.constraint(equalToConstant: 40),
+
             submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            submitButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20)
+            submitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
+            submitButton.widthAnchor.constraint(equalToConstant: 300),
+            submitButton.heightAnchor.constraint(equalToConstant: 60),
+
         ])
         
     }

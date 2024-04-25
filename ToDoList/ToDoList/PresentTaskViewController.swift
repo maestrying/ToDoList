@@ -21,12 +21,12 @@ class PresentTaskViewController: UIViewController {
     var dataToDo: TaskEntity?
     var taskIndex: IndexPath?
     
-    private lazy var label: UILabel = {
-        var label = UILabel()
-        label.text = dataToDo?.title
+    private lazy var textField: UITextField = {
+        var textField = UITextField()
+        textField.text = "123"
         
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
     }()
     
     
@@ -46,14 +46,15 @@ class PresentTaskViewController: UIViewController {
         title = "Редактировать"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteAction))
         
-        view.addSubview(label)
+        view.addSubview(textField)
         
         
         // MARK: Constraints
         
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100)
+            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
         ])
     }
     

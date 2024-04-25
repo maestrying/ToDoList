@@ -159,6 +159,10 @@ extension MainViewController: AddTaskViewControllerDelegate {
 }
 
 extension MainViewController: PresentTaskViewControllerDelegate {
+    func updateTask(item: TaskEntity, title: String, description: String) {
+        updateItem(item: item, newTitle: title, newDescr: description)
+    }
+    
     func deleteTask(at index: IndexPath) {
         deleteItem(item: models[index.row])
         tasksTableView.deleteRows(at: [index], with: .automatic)

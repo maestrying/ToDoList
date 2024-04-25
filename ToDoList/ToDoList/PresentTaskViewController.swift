@@ -11,6 +11,7 @@ import UIKit
 
 protocol PresentTaskViewControllerDelegate: AnyObject {
     func deleteTask(at index: IndexPath)
+    func updateTask(item: TaskEntity, title: String, description: String)
 }
 
 
@@ -63,7 +64,10 @@ class PresentTaskViewController: UIViewController {
     private func setupLayout() {
         view.backgroundColor = .systemBackground
         title = "Редактировать"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteAction))
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(updateAction)),
+            UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteAction))
+        ]
         
         view.addSubview(textField)
         view.addSubview(descrTask)
@@ -95,6 +99,16 @@ class PresentTaskViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: "Отмена", style: .cancel))
         
         self.present(alertController, animated: true)
+    }
+    
+    @objc func updateAction() {
+        guard taskIndex != nil else { return }
+        
+        if let taskEntity = dataToDo, let text = textField.text, let descr = descrTask.text {
+            self.delegate?.updateTask(item: taskEntity, title: text, description: descr)
+            navigationController?.popViewController(animated: true)
+        }
+        
     }
     
 }

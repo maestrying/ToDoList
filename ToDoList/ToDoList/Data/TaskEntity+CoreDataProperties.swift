@@ -23,6 +23,7 @@ extension TaskEntity {
     @NSManaged public var id: Int16
     @NSManaged public var title: String?
     @NSManaged public var descr: String?
+    @NSManaged public var isFavorite: Bool
 
 }
 

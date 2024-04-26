@@ -19,9 +19,15 @@ class TabBarController: UITabBarController {
     
     // MARK: - Tab setup
     private func setupTabs() {
-        let favorites = createNav(title: "Избранные", image: UIImage(systemName: "star.fill"), viewController: FavoriteTasksViewController())
-        let main = createNav(title: "Задачи", image: UIImage(systemName: "list.dash"), viewController: MainViewController())
-        let settings = createNav(title: "Настройки", image: UIImage(systemName: "gearshape.fill"), viewController: SettingsViewController())
+        let mainVC = MainViewController()
+        let favoriteVC = FavoriteTasksViewController()
+        let settingsVC = SettingsViewController()
+        
+        favoriteVC.delegate = mainVC
+        
+        let favorites = createNav(title: "Избранные", image: UIImage(systemName: "star.fill"), viewController: favoriteVC)
+        let main = createNav(title: "Задачи", image: UIImage(systemName: "list.dash"), viewController: mainVC)
+        let settings = createNav(title: "Настройки", image: UIImage(systemName: "gearshape.fill"), viewController: settingsVC)
         
         setViewControllers([favorites, main, settings], animated: true)
         

@@ -84,6 +84,18 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return configuration
     }
     
+    // MARK: Gesture for add favorite task
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let addToFavorite = UIContextualAction(style: .normal, title: "Избранное") { action, view, completionHandler  in
+            let selectedTask = self.models[indexPath.row]
+            self.favorite(item: selectedTask)
+            completionHandler(true)
+        }
+        
+        let configuration = UISwipeActionsConfiguration(actions: [addToFavorite])
+        return configuration
+    }
+    
     @objc func addTask() {
         let addTaskViewController = AddTaskViewController()
         addTaskViewController.delegate = self
@@ -144,6 +156,17 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         }
     }
+    
+    func favorite(item: TaskEntity) {
+        item.isFavorite.toggle()
+        do {
+            try context.save()
+            getAllItems()
+        }
+        catch {
+            
+        }
+    }
 
 
 }
@@ -166,6 +189,23 @@ extension MainViewController: PresentTaskViewControllerDelegate {
     func deleteTask(at index: IndexPath) {
         deleteItem(item: models[index.row])
         tasksTableView.deleteRows(at: [index], with: .automatic)
+    }
+
+}
+
+extension MainViewController: FavoriteTasksDelegate {
+    func getAllFavoriteTasks() -> [TaskEntity] {
+        var favoriteTasks = [TaskEntity]()
+        models.forEach { TaskEntity in
+            if TaskEntity.isFavorite == true {
+                favoriteTasks.append(TaskEntity)
+            }
+        }
+        return favoriteTasks
+    }
+    
+    func getAllTasks() {
+        getAllItems()
     }
 
 }
